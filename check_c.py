@@ -23,7 +23,7 @@ for n, case in enumerate(cases):
 	sections = case.split("\n\n\t\n\n")
 	args = sections[0]
 	goal = sections[1]
-	subprocess.run(
+	compilation_code = subprocess.run(
 		[
 			"gcc",
 			"-Wall",
@@ -36,7 +36,10 @@ for n, case in enumerate(cases):
 			"-o",
 			"out",
 		]
-	)
+	).returncode
+	if compilation_code != 0:
+		print(f"{red}Compilation failed")
+		exit(1)
 	result = subprocess.run(
 		["./out"], input=args, encoding="ascii", stdout=subprocess.PIPE
 	).stdout
