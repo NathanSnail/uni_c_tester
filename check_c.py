@@ -10,10 +10,13 @@ green = f"{ansi}[32m[+] "
 reset = f"{ansi}[0m"
 if len(sys.argv) < 2:
 	print(f"{red}No c file passed{reset}")
-	print(f"{blue}Use like: {reset}py check_c.py program.c")
+	print(f"{blue}Use like: {reset}py check_c.py program.c [program.cases | ./cases]")
 	exit(1)
 cpath = sys.argv[1]
-source = open("./cases", "r").read()
+case_path = "./cases"
+if len(sys.argv) > 2:
+	case_path = sys.argv[2]
+source = open(case_path, "r").read()
 if source[-1] == "\n":
 	source = source[:-1]
 cases = re.split(r"(?<!\t)\n\n(?!\t)", source)
